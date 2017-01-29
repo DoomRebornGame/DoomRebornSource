@@ -184,7 +184,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Link>
       <AdditionalLibraryDirectories>openal\lib;sys\win32\dongle;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <OutputFile>$(OutDir)DOOM_REBORN.exe</OutputFile>
+      <OutputFile>$(OutDir)DoomReborn.exe</OutputFile>
     </Link>
     <ClCompile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
