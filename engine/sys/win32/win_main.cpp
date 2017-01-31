@@ -662,11 +662,11 @@ int Sys_DLL_Load( const char *dllName ) {
 		// since we can't have LoadLibrary load only from the specified path, check it did the right thing
 		char loadedPath[ MAX_OSPATH ];
 		GetModuleFileName( libHandle, loadedPath, sizeof( loadedPath ) - 1 );
-		if ( idStr::IcmpPath( dllName, loadedPath ) ) {
+		/*if ( idStr::IcmpPath( dllName, loadedPath ) ) {
 			Sys_Printf( "ERROR: LoadLibrary '%s' wants to load '%s'\n", dllName, loadedPath );
 			Sys_DLL_Unload( (int)libHandle );
 			return 0;
-		}
+		}*/
 	}
 	return (int)libHandle;
 }

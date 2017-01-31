@@ -792,6 +792,7 @@ public:
 	static idCVar			s_showLevelMeter;
 	static idCVar			s_meterTopTime;
 	static idCVar			s_volume;
+    static idCVar			s_music_volume;
 	static idCVar			s_constantAmplitude;
 	static idCVar			s_playDefaultSound;
 	static idCVar			s_useOcclusion;
