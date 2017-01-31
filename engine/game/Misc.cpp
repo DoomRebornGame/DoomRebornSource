@@ -3215,7 +3215,7 @@ void idSecret::Event_Touch(idEntity *other, trace_t *trace) {
 	}
 }
 
-ID_INLINE void idSecret::Deactivate() {
+void idSecret::Deactivate() {
    activated = true;
 }
 
