@@ -111,8 +111,8 @@ void idItem::Save( idSaveGame *savefile ) const {
 idItem::Restore
 ================
 */
-void idItem::Restore( idRestoreGame *savefile ) {
-
+void idItem::Restore( idRestoreGame *savefile ) 
+{
 	savefile->ReadVec3( orgOrigin );
 	savefile->ReadBool( spin );
 	savefile->ReadBool( pulse );
@@ -272,6 +272,14 @@ void idItem::Spawn( void ) {
 	idEntity *	ent;
 	float		tsize;
 
+// PHIL BEGIN
+	const char *kv;  
+	 kv = spawnArgs.GetString( "inv_name", "" );
+   if ( kv != "" ) { // Only if it's something good to eat!
+      gameLocal.items++;
+   }
+// PHIL END
+
 	if ( spawnArgs.GetBool( "dropToFloor" ) ) {
 		PostEventMS( &EV_DropToFloor, 0 );
 	}
@@ -313,7 +321,6 @@ void idItem::Spawn( void ) {
 	lastCycle = -1;
 	itemShellHandle = -1;
 	shellMaterial = declManager->FindMaterial( "itemHighlightShell" );
-	gameLocal.items++;
 }
 
 /*
@@ -339,6 +346,8 @@ idItem::GiveToPlayer
 ================
 */
 bool idItem::GiveToPlayer( idPlayer *player ) {
+// PHIL BEGIN
+
 	if ( player == NULL ) {
 		return false;
 	}
@@ -348,6 +357,8 @@ bool idItem::GiveToPlayer( idPlayer *player ) {
 	} 
 	
 	return player->GiveItem( this );
+	//return false;
+// PHIL END
 }
 
 /*
@@ -360,7 +371,7 @@ bool idItem::Pickup( idPlayer *player ) {
 	if ( !GiveToPlayer( player ) ) {
 		return false;
 	}
-
+	player->inventory.itemspickedup++; // PHIL
 	if ( gameLocal.isServer ) {
 		ServerSendEvent( EVENT_PICKUP, NULL, false, -1 );
 	}

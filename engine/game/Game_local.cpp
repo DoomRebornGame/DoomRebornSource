@@ -562,6 +562,15 @@ void idGameLocal::SaveGame( idFile *f ) {
 	savegame.WriteBool( influenceActive );
 	savegame.WriteInt( nextGibTime );
 
+
+	/*savegame.WriteInt( monsters );
+   savegame.WriteInt( items );
+   int numsecrets = secretAreas.Num();
+   savegame.WriteInt( numsecrets );
+   for ( i = 0; i != numsecrets; i++ ) {
+      savegame.WriteInt( secretAreas[ i ] );
+   }*/
+
 	// spawnSpots
 	// initialSpots
 	// currentInitialSpot
@@ -866,6 +875,11 @@ void idGameLocal::LoadMap( const char *mapName, int randseed ) {
 	
 	spawnedEntities.Clear();
 	activeEntities.Clear();
+// PHIL BEGIN
+	secretAreas.Clear();
+   monsters = 0;
+   items = 0;
+// PHIL END
 	numEntitiesToDeactivate = 0;
 	sortTeamMasters = false;
 	sortPushers = false;
@@ -1176,6 +1190,10 @@ void idGameLocal::InitFromNewMap( const char *mapName, idRenderWorld *renderWorl
 	LoadMap( mapName, randseed );
 
 	InitScriptForMap();
+// PHIL BEGIN
+	monsters = 0;
+   items = 0;
+// PHIL END
 
 	MapPopulate();
 
@@ -1335,6 +1353,15 @@ bool idGameLocal::InitFromSaveGame( const char *mapName, idRenderWorld *renderWo
 	savegame.ReadInt( framenum );
 	savegame.ReadInt( previousTime );
 	savegame.ReadInt( time );
+
+	/*savegame.ReadInt( monsters );
+    savegame.ReadInt( items );
+    int numsecrets;
+    savegame.ReadInt( numsecrets );
+    secretAreas.SetNum( numsecrets, true ); // Resize the list so we don't violate memory rules - Thanks NiceMice
+    for ( i = 0; i != numsecrets; i++ ) {
+       savegame.ReadInt( secretAreas[ i ] );
+    }*/
 
 	savegame.ReadInt( vacuumAreaNum );
 
@@ -2187,6 +2214,10 @@ gameReturn_t idGameLocal::RunFrame( const usercmd_t *clientCmds ) {
 		previousTime = time;
 		time += msec;
 		realClientTime = time;
+// PHIL BEGIN
+		if ( !isMultiplayer ) 
+      GetLocalPlayer()->inventory.time = time;
+// PHIL END
 
 #ifdef GAME_DLL
 		// allow changing SIMD usage on the fly
@@ -4366,6 +4397,7 @@ idGameLocal::GetMapLoadingGUI
 */
 void idGameLocal::GetMapLoadingGUI( char gui[ MAX_STRING_CHARS ] ) { }
 
+// PHIL BEGIN
 /*
 ====================
 idGameLocal::DeactivateSecretAreas  SnoopJeDi
@@ -4373,17 +4405,13 @@ Multiple func_secret entities can be used for one secret (ie. E1M1 hallway).
 Once triggered, all entities with the same SecretNum will be deactivated.
 ====================
 */
-void idGameLocal::DeactivateSecretAreas(int areanum) 
-{
-	for (idEntity * ent = spawnedEntities.Next(); ent != NULL; ent = ent->spawnNode.Next()) 
-	{
-		if (ent->IsType(idSecret::Type)) 
-		{
-			idSecret *secret = static_cast<idSecret *>(ent);
-			if (secret->GetNum() == areanum) 
-			{
-				secret->Deactivate();
-			}
-		}
-	}
+void idGameLocal::DeactivateSecretAreas( int areanum ) {
+   for ( idEntity * ent = spawnedEntities.Next(); ent != NULL; ent = ent->spawnNode.Next() ) {
+      if ( ent->IsType( idSecret::Type ) ) {
+         idSecret *secret = static_cast<idSecret *>(ent);
+         if ( secret->GetNum() == areanum ) {
+            secret->Deactivate();
+         }
+      }
+   }
 }

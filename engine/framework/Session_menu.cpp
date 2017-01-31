@@ -135,7 +135,7 @@ void idSessionLocal::StartStats(const char * nextMap)
 	guiEndLevelStats->SetStateInt("level_no", DRLevelID);
 	auto kills(game->GetPersistentPlayerInfo(0).GetInt("kills"));
 	auto items( game->GetPersistentPlayerInfo(0).GetInt("items"));
-	auto secrets( game->GetPersistentPlayerInfo(0).GetInt("secrets"));
+	auto secrets( game->GetPersistentPlayerInfo(0).GetInt("Secrets"));
 	
 	auto totalMonsters(game->monsters);
 	auto totalItems(game->items);

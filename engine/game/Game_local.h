@@ -313,6 +313,15 @@ public:
 	idEntityPtr<idEntity>	lastGUIEnt;				// last entity with a GUI, used by Cmd_NextGUI_f
 	int						lastGUI;				// last GUI on the lastGUIEnt
 
+// PHIL BEGIN
+	void               DeactivateSecretAreas( int areanum );
+	int                  monsters;
+	int                  items;
+    idList<int>            secretAreas;
+
+	
+// Phil End
+
 	// ---------------------- Public idGame Interface -------------------
 
 							idGameLocal();
@@ -466,8 +475,6 @@ public:
 	int						GetGibTime() { return nextGibTime; };
 
 	bool					NeedRestart();
-
-	void					DeactivateSecretAreas(int areanum);
 
 private:
 	const static int		INITIAL_SPAWN_COUNT = 1;

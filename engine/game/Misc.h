@@ -762,27 +762,30 @@ private:
 	idList<idVec3>		lastTargetPos;
 };
 
+#endif /* !__GAME_MISC_H__ */
+// PHIL BEGIN
 /*
 ==================================
-idSecret - Simple entity for activating secret areas
+
+   idSecret - Simple entity for activating secret areas
+
 ==================================
 */
 class idSecret : public idEntity {
 public:
-	CLASS_PROTOTYPE(idSecret);
-
-	idSecret();
-	void         Spawn(void);
-	void         Save(idSaveGame *savefile) const;
-	void         Restore(idRestoreGame *savefile);
-	void         Think(void);
-	void         Deactivate();
-	int             GetNum();
+      CLASS_PROTOTYPE( idSecret );
+               
+                  idSecret();
+      void         Spawn ( void );
+      void         Save( idSaveGame *savefile ) const;
+      void         Restore( idRestoreGame *savefile );
+      void         Think( void );
+      void         Deactivate();
+      int             GetNum();
 
 private:
-	void         Event_Touch(idEntity *other, trace_t *trace);
-	int            SecretNum;
-	bool         activated;
+      void         Event_Touch( idEntity *other, trace_t *trace );
+      int            SecretNum;
+      bool         activated;
 };
-
-#endif /* !__GAME_MISC_H__ */
+// PHIL END

@@ -120,11 +120,12 @@ public:
 	int						ammo[ AMMO_NUMTYPES ];
 	int						clip[ MAX_WEAPONS ];
 	int						powerupEndTime[ MAX_POWERUPS ];
-
-	int						kills;
-	int						itemsCollected;
-	int						secrets;
-
+// PHIL BGIN
+	 int                  Secrets;
+   int                  kills; 
+   int                  itemspickedup;
+   int                  time;
+// PHIL END
 
 	// mp
 	int						ammoPredictTime;
@@ -214,7 +215,9 @@ public:
 	usercmd_t				usercmd;
 
 	class idPlayerView		playerView;			// handles damage kicks and effects
-
+   void               SecretArea( int areanum );
+   void ClearStats();
+   void ToggleStatsDebug(void);
 	bool					noclip;
 	bool					godmode;
 

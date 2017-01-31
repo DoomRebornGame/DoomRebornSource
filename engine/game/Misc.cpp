@@ -3148,8 +3148,9 @@ void idPhantomObjects::Think( void ) {
 	}
 }
 
-CLASS_DECLARATION(idEntity, idSecret)
-EVENT(EV_Touch, idSecret::Event_Touch)
+// PHIL BEGIN
+CLASS_DECLARATION( idEntity, idSecret )
+   EVENT( EV_Touch,            idSecret::Event_Touch )
 END_CLASS
 
 /*
@@ -3157,7 +3158,7 @@ END_CLASS
 idSecret::idSecret()
 ===========================
 */
-idSecret::idSecret(void) {
+idSecret::idSecret( void ) {
 }
 
 /*
@@ -3187,8 +3188,8 @@ void idSecret::Spawn(void) {
 idSecret::Save()
 ===========================
 */
-void idSecret::Save(idSaveGame *savefile) const {
-	savefile->WriteInt(SecretNum);
+void idSecret::Save( idSaveGame *savefile ) const {
+   savefile->WriteInt( SecretNum );
 }
 
 /*
@@ -3196,8 +3197,8 @@ void idSecret::Save(idSaveGame *savefile) const {
 idSecret::Restore()
 ===========================
 */
-void idSecret::Restore(idRestoreGame *savefile) {
-	savefile->ReadInt(SecretNum);
+void idSecret::Restore( idRestoreGame *savefile ) {
+   savefile->ReadInt( SecretNum );
 }
 
 /*
@@ -3215,10 +3216,11 @@ void idSecret::Event_Touch(idEntity *other, trace_t *trace) {
 	}
 }
 
-void idSecret::Deactivate() {
-	activated = true;
+ID_INLINE void idSecret::Deactivate() {
+   activated = true;
 }
 
 int idSecret::GetNum() {
-	return SecretNum;
+   return SecretNum;
 }
+// PHIL END

@@ -130,6 +130,11 @@ void idInventory::Clear( void ) {
 	deplete_rate	= 0.0f;
 	deplete_ammount	= 0;
 	nextArmorDepleteTime = 0;
+// PHIL BEGIN
+	 Secrets         = 0;
+   kills         = 0;
+   itemspickedup   = 0;
+// PHIL END
 
 	memset( ammo, 0, sizeof( ammo ) );
 
@@ -266,9 +271,11 @@ void idInventory::GetPersistantData( idDict &dict ) {
 	dict.SetInt( "pdaOpened", pdaOpened );
 	dict.SetInt( "turkeyScore", turkeyScore );
 
-	dict.SetInt("kills", kills);
-	dict.SetInt("items", itemsCollected);
-	dict.SetInt("secrets", secrets);
+// PHIL BEGIN
+	dict.SetInt( "Secrets", Secrets );
+   dict.SetInt( "kills", kills );
+   dict.SetInt( "itemspickedup", itemspickedup );
+// PHIL END
 
 	// pdas
 	for ( i = 0; i < pdas.Num(); i++ ) {
@@ -326,6 +333,12 @@ void idInventory::RestoreInventory( idPlayer *owner, const idDict &dict ) {
 	deplete_armor	= dict.GetInt( "deplete_armor", "0" );
 	deplete_rate	= dict.GetFloat( "deplete_rate", "2.0" );
 	deplete_ammount	= dict.GetInt( "deplete_ammount", "1" );
+
+// PHIL BEGIN
+	Secrets         = dict.GetInt( "Secrets", "0" );
+   kills         = dict.GetInt( "kills", "0" ); 
+   itemspickedup   = dict.GetInt( "itemspickedup", "0" );
+// PHIL END
 
 	// the clip and powerups aren't restored
 
@@ -432,9 +445,12 @@ void idInventory::Save( idSaveGame *savefile ) const {
 	savefile->WriteFloat( deplete_rate );
 	savefile->WriteInt( deplete_ammount );
 	savefile->WriteInt( nextArmorDepleteTime );
-	savefile->WriteInt(kills);
-	savefile->WriteInt(itemsCollected);
-	savefile->WriteInt(secrets);
+// PHIL BEGIN
+	savefile->WriteInt( Secrets );
+   savefile->WriteInt( kills );
+   savefile->WriteInt( itemspickedup );
+   savefile->WriteInt( time );
+// PHIL END
 
 	for( i = 0; i < AMMO_NUMTYPES; i++ ) {
 		savefile->WriteInt( ammo[ i ] );
@@ -531,9 +547,13 @@ void idInventory::Restore( idRestoreGame *savefile ) {
 	savefile->ReadFloat( deplete_rate );
 	savefile->ReadInt( deplete_ammount );
 	savefile->ReadInt( nextArmorDepleteTime );
-	savefile->ReadInt(kills);
-	savefile->ReadInt(itemsCollected);
-	savefile->ReadInt(secrets);
+
+// PHIL BEGIN
+	 savefile->ReadInt( Secrets );
+   savefile->ReadInt( kills );
+   savefile->ReadInt( itemspickedup );
+   savefile->ReadInt( time );
+// PHIL END
 
 	for( i = 0; i < AMMO_NUMTYPES; i++ ) {
 		savefile->ReadInt( ammo[ i ] );
@@ -777,7 +797,6 @@ bool idInventory::Give( idPlayer *owner, const idDict &spawnArgs, const char *st
 		if ( armor >= maxarmor ) {
 			return false;	// can't hold any more, so leave the item
 		}
-		itemsCollected++;
 		amount = atoi( value );
 		if ( amount ) {
 			armor += amount;
@@ -849,8 +868,7 @@ bool idInventory::Give( idPlayer *owner, const idDict &spawnArgs, const char *st
 			}
 		}
 		return tookWeapon;
-	}
-	else if (!idStr::Icmp(statname, "item") || !idStr::Icmp(statname, "icon") || !idStr::Icmp(statname, "name")) {
+	} else if ( !idStr::Icmp( statname, "item" ) || !idStr::Icmp( statname, "icon" ) || !idStr::Icmp( statname, "name" ) ) {
 		// ignore these as they're handled elsewhere
 		return false;
 	}
@@ -1432,6 +1450,9 @@ void idPlayer::Init( void ) {
 	}
 
 	cvarSystem->SetCVarBool( "ui_chat", false );
+// PHIL BEGIN
+	ClearStats();
+// PHIL END
 }
 
 /*
@@ -1596,9 +1617,6 @@ void idPlayer::Spawn( void ) {
 
 	inventory.pdaOpened = false;
 	inventory.selPDA = 0;
-	inventory.kills = 0;
-	inventory.itemsCollected = 0;
-	inventory.secrets = 0;
 
 	if ( !gameLocal.isMultiplayer ) {
 		if ( g_skill.GetInteger() < 2 ) {
@@ -2912,7 +2930,7 @@ bool idPlayer::Give( const char *statname, const char *value ) {
 		amount = atoi(healthString.substr(0, divider).c_str());
 		int max = atoi(healthString.substr(divider + 1, healthString.length() - divider + 1).c_str());
 
-		inventory.itemsCollected++;
+		inventory.itemspickedup++;
 
 		if ( health >= max ) {
 			return false;
@@ -3279,7 +3297,6 @@ bool idPlayer::GiveInventoryItem( idDict *item ) {
 	if ( hud ) {
 		hud->SetStateString( "itemicon", info.icon );
 		hud->HandleNamedEvent( "invPickup" );
-		hud->HandleNamedEvent(item->GetString("pickupNamedEvent"));
 	}
 	return true;
 }
@@ -5611,7 +5628,7 @@ void idPlayer::PerformImpulse( int impulse ) {
 		ClientSendEvent( EVENT_IMPULSE, &msg );
 	}
 
-	if ( impulse >= IMPULSE_0 && impulse <= IMPULSE_12 ) {
+	if ( impulse >= IMPULSE_0 && impulse <= IMPULSE_10 || impulse == IMPULSE_12 ) {
 		SelectWeapon( impulse, false );
 		return;
 	}
@@ -6771,7 +6788,7 @@ void idPlayer::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &di
 	if ( gameLocal.isClient ) {
 		return;
 	}
-	
+	fl.noknockback = true;
 	if ( !fl.takedamage || noclip || spectating || gameLocal.inCinematic ) {
 		return;
 	}
@@ -7444,7 +7461,7 @@ void idPlayer::AddAIKill( void ) {
 	int max_souls;
 	int ammo_souls;
 
-	inventory.kills++;
+	inventory.kills++; // PHIL
 
 	if ( ( weapon_soulcube < 0 ) || ( inventory.weapons & ( 1 << weapon_soulcube ) ) == 0 ) {
 		return;
@@ -8590,4 +8607,26 @@ idPlayer::NeedsIcon
 bool idPlayer::NeedsIcon( void ) {
 	// local clients don't render their own icons... they're only info for other clients
 	return entityNumber != gameLocal.localClientNum && ( isLagged || isChatting );
+}
+
+// PHIL BEGIN
+/*
+================
+idPlayer::SecretArea
+================
+*/
+void idPlayer::SecretArea( int areanum ) {
+   inventory.Secrets++;
+   gameLocal.DeactivateSecretAreas( areanum );
+}
+/*
+==================
+idPlayer::ClearStats
+==================
+*/
+
+void idPlayer::ClearStats() {
+   inventory.kills = 0;
+   inventory.Secrets = 0;
+   inventory.itemspickedup = 0;
 }
