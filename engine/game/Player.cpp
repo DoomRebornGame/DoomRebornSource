@@ -797,6 +797,7 @@ bool idInventory::Give( idPlayer *owner, const idDict &spawnArgs, const char *st
 		if ( armor >= maxarmor ) {
 			return false;	// can't hold any more, so leave the item
 		}
+        itemspickedup++;
 		amount = atoi( value );
 		if ( amount ) {
 			armor += amount;
@@ -3297,6 +3298,7 @@ bool idPlayer::GiveInventoryItem( idDict *item ) {
 	if ( hud ) {
 		hud->SetStateString( "itemicon", info.icon );
 		hud->HandleNamedEvent( "invPickup" );
+        hud->HandleNamedEvent(item->GetString("pickupNamedEvent"));
 	}
 	return true;
 }

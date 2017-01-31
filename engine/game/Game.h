@@ -191,11 +191,6 @@ public:
 
 	virtual void				GetMapLoadingGUI( char gui[ MAX_STRING_CHARS ] ) = 0;
 
-	//for total stats
-	int							monsters;
-	idList<int>					secrets;
-	int							secretsFound;
-	int							items;
 };
 
 extern idGame *					game;

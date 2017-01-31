@@ -3402,10 +3402,6 @@ void idAI::Killed( idEntity *inflictor, idEntity *attacker, int damage, const id
 		gameLocal.SpawnEntityDef( args );
 		kv = spawnArgs.MatchPrefix( "def_drops", kv );
 	}
-// PHIL BEGIN
-	if ( !gameLocal.isMultiplayer )
-      gameLocal.GetLocalPlayer()->AddAIKill();
-// PHIL END
 
 	if ( ( attacker && attacker->IsType( idPlayer::Type ) ) && ( inflictor && !inflictor->IsType( idSoulCubeMissile::Type ) ) ) {
 		static_cast< idPlayer* >( attacker )->AddAIKill();

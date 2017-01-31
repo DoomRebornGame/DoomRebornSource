@@ -3176,8 +3176,8 @@ idSecret::Spawn()
 */
 void idSecret::Spawn(void) {
 	SecretNum = spawnArgs.GetInt("SecretNum", "0");
-	if (gameLocal.secrets.FindIndex(SecretNum) < 0) {
-		gameLocal.secrets.Append(SecretNum);
+	if (gameLocal.secretAreas.FindIndex(SecretNum) < 0) {
+		gameLocal.secretAreas.Append(SecretNum);
 	}
 	activated = false;
 	GetPhysics()->SetContents(CONTENTS_TRIGGER); // Can be Touch()-ed, but not solid.
@@ -3210,7 +3210,6 @@ void idSecret::Event_Touch(idEntity *other, trace_t *trace) {
 	if (!gameLocal.isMultiplayer && !activated && other->IsType(
 		idPlayer::Type)) 
 	{
-		gameLocal.secretsFound++;
 		gameLocal.DeactivateSecretAreas(SecretNum);
 		Deactivate(); // Don't touch me again!
 	}

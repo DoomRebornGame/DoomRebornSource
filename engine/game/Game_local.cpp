@@ -563,13 +563,13 @@ void idGameLocal::SaveGame( idFile *f ) {
 	savegame.WriteInt( nextGibTime );
 
 
-	/*savegame.WriteInt( monsters );
+   savegame.WriteInt( monsters );
    savegame.WriteInt( items );
    int numsecrets = secretAreas.Num();
    savegame.WriteInt( numsecrets );
    for ( i = 0; i != numsecrets; i++ ) {
       savegame.WriteInt( secretAreas[ i ] );
-   }*/
+   }
 
 	// spawnSpots
 	// initialSpots
@@ -1354,15 +1354,6 @@ bool idGameLocal::InitFromSaveGame( const char *mapName, idRenderWorld *renderWo
 	savegame.ReadInt( previousTime );
 	savegame.ReadInt( time );
 
-	/*savegame.ReadInt( monsters );
-    savegame.ReadInt( items );
-    int numsecrets;
-    savegame.ReadInt( numsecrets );
-    secretAreas.SetNum( numsecrets, true ); // Resize the list so we don't violate memory rules - Thanks NiceMice
-    for ( i = 0; i != numsecrets; i++ ) {
-       savegame.ReadInt( secretAreas[ i ] );
-    }*/
-
 	savegame.ReadInt( vacuumAreaNum );
 
 	savegame.ReadInt( entityDefBits );
@@ -1412,6 +1403,15 @@ bool idGameLocal::InitFromSaveGame( const char *mapName, idRenderWorld *renderWo
 
 	savegame.ReadBool( influenceActive );
 	savegame.ReadInt( nextGibTime );
+
+    savegame.ReadInt( monsters );
+    savegame.ReadInt( items );
+    int numsecrets;
+    savegame.ReadInt( numsecrets );
+    secretAreas.SetNum( numsecrets, true );
+    for ( i = 0; i != numsecrets; i++ ) {
+    savegame.ReadInt( secretAreas[ i ] );
+    }
 
 	// spawnSpots
 	// initialSpots
@@ -3237,7 +3237,7 @@ void idGameLocal::SpawnMapEntities( void ) {
 	// the worldspawn is a special that performs any global setup
 	// needed by a level
 	mapEnt = mapFile->GetEntity( 0 );
-	args = mapEnt->epairs;
+    args = mapEnt->epairs; 
 	args.SetInt( "spawn_entnum", ENTITYNUM_WORLD );
 	if ( !SpawnEntityDef( args ) || !entities[ ENTITYNUM_WORLD ] || !entities[ ENTITYNUM_WORLD ]->IsType( idWorldspawn::Type ) ) {
 		Error( "Problem spawning world entity" );

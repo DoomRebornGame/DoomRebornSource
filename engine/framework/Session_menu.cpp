@@ -30,6 +30,7 @@ If you have questions concerning this license or the applicable additional terms
 #pragma hdrstop
 
 #include "Session_local.h"
+#include "../game/Game_local.h"
 
 idCVar	idSessionLocal::gui_configServerRate( "gui_configServerRate", "0", CVAR_GUI | CVAR_ARCHIVE | CVAR_ROM | CVAR_INTEGER, "" );
 
@@ -134,12 +135,12 @@ void idSessionLocal::StartStats(const char * nextMap)
 
 	guiEndLevelStats->SetStateInt("level_no", DRLevelID);
 	auto kills(game->GetPersistentPlayerInfo(0).GetInt("kills"));
-	auto items( game->GetPersistentPlayerInfo(0).GetInt("items"));
+	auto items( game->GetPersistentPlayerInfo(0).GetInt("itemspickedup"));
 	auto secrets( game->GetPersistentPlayerInfo(0).GetInt("Secrets"));
 	
-	auto totalMonsters(game->monsters);
-	auto totalItems(game->items);
-	auto totalSecrets(game->secrets);
+	auto totalMonsters(dynamic_cast<idGameLocal*>(game)->monsters);
+	auto totalItems(dynamic_cast<idGameLocal*>(game)->items);
+	auto totalSecrets(dynamic_cast<idGameLocal*>(game)->secretAreas);
 
 	auto killString = "Kills: " + idStr(kills) + idStr("/")  + idStr(totalMonsters);
 	auto itemString = "Items: " + idStr(items) + idStr("/") + idStr(totalItems);
