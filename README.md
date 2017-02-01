@@ -3,8 +3,10 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/38a8wp5wydp6f437?svg=true)](https://ci.appveyor.com/project/JonnyPtn/doomrebornsource-n08hm)
 
 www.DoomRebornGame.com
+
 www.Moddb.com/mods/DoomReborn
-www.DoomWadStation.net 
+
+www.DoomWadStation.net
 
 Source code modified from the original DOOM 3 for the Doom Reborn mod
 
