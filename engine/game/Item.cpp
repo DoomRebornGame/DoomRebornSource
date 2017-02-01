@@ -272,14 +272,6 @@ void idItem::Spawn( void ) {
 	idEntity *	ent;
 	float		tsize;
 
-// PHIL BEGIN
-	const char *kv;  
-	 kv = spawnArgs.GetString( "inv_name", "" );
-   if ( kv != "" ) { // Only if it's something good to eat!
-      gameLocal.items++;
-   }
-// PHIL END
-
 	if ( spawnArgs.GetBool( "dropToFloor" ) ) {
 		PostEventMS( &EV_DropToFloor, 0 );
 	}
@@ -368,10 +360,9 @@ idItem::Pickup
 */
 bool idItem::Pickup( idPlayer *player ) {
 	
-	if ( !GiveToPlayer( player ) ) {
-		return false;
-	}
-	player->inventory.itemspickedup++; // PHIL
+    if (!GiveToPlayer(player)) {
+        return false;
+    }
 	if ( gameLocal.isServer ) {
 		ServerSendEvent( EVENT_PICKUP, NULL, false, -1 );
 	}

@@ -3255,6 +3255,15 @@ void idGameLocal::SpawnMapEntities( void ) {
 			CacheDictionaryMedia( &args );
 
 			SpawnEntityDef( args );
+
+            //check if it should count towards the overall item count
+            const char *kv;
+            kv = args.GetString("inv_name", "");
+            if (idStr::Icmp(kv, "")) 
+            { 
+                gameLocal.items++;
+            }
+
 			num++;
 		} else {
 			inhibit++;
@@ -4410,7 +4419,7 @@ void idGameLocal::DeactivateSecretAreas( int areanum ) {
       if ( ent->IsType( idSecret::Type ) ) {
          idSecret *secret = static_cast<idSecret *>(ent);
          if ( secret->GetNum() == areanum ) {
-            secret->Deactivate();
+           secret->Deactivate();
          }
       }
    }

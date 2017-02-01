@@ -3211,6 +3211,7 @@ void idSecret::Event_Touch(idEntity *other, trace_t *trace) {
 		idPlayer::Type)) 
 	{
 		gameLocal.DeactivateSecretAreas(SecretNum);
+        static_cast<idPlayer*>(other)->inventory.Secrets++;
 		Deactivate(); // Don't touch me again!
 	}
 }
