@@ -24,27 +24,27 @@ Please report it! we welcome any helpful bug reports or suggestions.
 
 ## Credits
 
--Michael Hanlon (>>GameHacKeR<<) - (Current Leader, Mapper,Texture Artist, Other Odd Jobs)
--Brent de Carteret - (Project Founder\Co-Leader, Coder, Web design, Object modeler, Mapper)
--Reinchard - (Creator of remade Doom Guy face in the hud and some of his remade textures and new menu buttons and skull face)
--Jonny - (New coder has redone some of Brents older code and added alot of cool things, I can't thank him enough for his help)  
--Dafama2k7 - (Creator of the Doom Reborn Pre-beta Version 1.5 mod which some of the changes have made it into Pre-beta version 1.6)  
+- Michael Hanlon (>>GameHacKeR<<) - (Current Leader, Mapper,Texture Artist, Other Odd Jobs)
+- Brent de Carteret - (Project Founder\Co-Leader, Coder, Web design, Object modeler, Mapper)
+- Reinchard - (Creator of remade Doom Guy face in the hud and some of his remade textures and new menu buttons and skull face)
+- Jonny - (New coder has redone some of Brents older code and added alot of cool things, I can't thank him enough for his help)  
+- Dafama2k7 - (Creator of the Doom Reborn Pre-beta Version 1.5 mod which some of the changes have made it into Pre-beta version 1.6)  
 
 ## Pre release testers:
--Dr_Penquinatrix
--Christopher Hazzlet
--Grimori
--Innomen
--Lucasgodzilla
--Mwcool
--TeaMonster
+- Dr_Penquinatrix
+- Christopher Hazzlet
+- Grimori
+- Innomen
+- Lucasgodzilla
+- Mwcool
+- TeaMonster
 
 ## Past Contributors:
--Apz Feak - ( Texture Artest, Map Object Modeler, Item modeler, Monster/weapon Skiner)
--Pablo_messier - (Mapper)
--Neurological_1 - (Music)
--Lab_Rat - (Mapper)
--Stine - (GFX Artest)
--Gazz - (Managing Support)
--Striderdm1  - (Tester) Old Member
--Cristiano Salvati - (Music) E1M5 Sample
+- Apz Feak - ( Texture Artest, Map Object Modeler, Item modeler, Monster/weapon Skiner)
+- Pablo_messier - (Mapper)
+- Neurological_1 - (Music)
+- Lab_Rat - (Mapper)
+- Stine - (GFX Artest)
+- Gazz - (Managing Support)
+- Striderdm1  - (Tester) Old Member
+- Cristiano Salvati - (Music) E1M5 Sample
